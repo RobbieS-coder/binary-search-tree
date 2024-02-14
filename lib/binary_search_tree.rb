@@ -121,7 +121,7 @@ class Tree
     return false if node.nil?
     return true if value == node.value
 
-    contains?(value, node.left) || contains?(value, node.right)
+    contains?(value, value < node.value ? node.left : node.right)
   end
 
   def find_parent(value, node = @root, parent = nil)
