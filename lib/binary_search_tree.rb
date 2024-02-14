@@ -116,11 +116,29 @@ class Tree
     until queue.empty?
       current = queue.shift
       block_given? ? yield(current) : results << current.value
-      queue.push(current.left) if current.left
-      queue.push(current.right) if current.right
+      queue << current.left if current.left
+      queue << current.right if current.right
     end
 
     results unless block_given?
+  end
+
+  def inorder(node = @root)
+    return [] if node.nil?
+
+    inorder(node.left) + [node.value] + inorder(node.right)
+  end
+
+  def preorder(node = @root)
+    return [] if node.nil?
+
+    [node.value] + preorder(node.left) + preorder(node.right)
+  end
+
+  def postorder(node = @root)
+    return [] if node.nil?
+
+    postorder(node.left) + postorder(node.right) + [node.value]
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
