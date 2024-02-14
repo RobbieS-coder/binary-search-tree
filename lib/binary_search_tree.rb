@@ -109,6 +109,20 @@ class Tree
     node.value > value ? find(value, node.left) : find(value, node.right)
   end
 
+  def level_order
+    queue = [@root]
+    results = []
+
+    until queue.empty?
+      current = queue.shift
+      block_given? ? yield(current) : results << current.value
+      queue.push(current.left) if current.left
+      queue.push(current.right) if current.right
+    end
+
+    results unless block_given?
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
