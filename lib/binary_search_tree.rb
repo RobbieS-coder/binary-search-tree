@@ -123,22 +123,37 @@ class Tree
     results unless block_given?
   end
 
-  def inorder(node = @root)
+  def inorder(node = @root, &block)
     return [] if node.nil?
 
-    inorder(node.left) + [node.value] + inorder(node.right)
+    results = []
+    results += inorder(node.left, &block)
+    block_given? ? yield(node) : results << node.value
+    results += inorder(node.right, &block)
+
+    results unless block_given?
   end
 
-  def preorder(node = @root)
+  def preorder(node = @root, &block)
     return [] if node.nil?
 
-    [node.value] + preorder(node.left) + preorder(node.right)
+    results = []
+    block_given? ? yield(node) : results << node.value
+    results += preorder(node.left, &block)
+    results += preorder(node.right, &block)
+
+    results unless block_given?
   end
 
-  def postorder(node = @root)
+  def postorder(node = @root, &block)
     return [] if node.nil?
 
-    postorder(node.left) + postorder(node.right) + [node.value]
+    results = []
+    results += postorder(node.left, &block)
+    results += postorder(node.right, &block)
+    block_given? ? yield(node) : results << node.value
+
+    results unless block_given?
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
