@@ -185,6 +185,10 @@ class Tree
     balance_factor <= 1 && balanced?(node.left) && balanced?(node.right)
   end
 
+  def rebalance
+    @root = build_tree(inorder)
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
