@@ -211,3 +211,32 @@ class Tree
     value < node.value ? find_parent(value, node.left, node) : find_parent(value, node.right, node)
   end
 end
+
+def print_orders(tree)
+  p tree.level_order
+  p tree.preorder
+  p tree.postorder
+  p tree.inorder
+end
+
+tree = Tree.new(Array.new(15) { rand(1..100) })
+
+tree.pretty_print
+
+p tree.balanced?
+
+print_orders(tree)
+
+(Array.new(16) { rand(101..200) }).each { |num| tree.insert(num) }
+
+tree.pretty_print
+
+p tree.balanced?
+
+tree.rebalance
+
+tree.pretty_print
+
+p tree.balanced?
+
+print_orders(tree)
