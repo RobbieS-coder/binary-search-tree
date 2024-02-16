@@ -177,6 +177,14 @@ class Tree
     counter
   end
 
+  def balanced?(node = @root)
+    return true if node.nil?
+
+    balance_factor = (height(node.left) - height(node.right)).abs
+
+    balance_factor <= 1 && balanced?(node.left) && balanced?(node.right)
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
